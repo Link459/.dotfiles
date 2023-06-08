@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+
+read -p "Enter project name: " name
+
+selected_project_lang=`cat ~/.dotfiles/languages | fzf`
+if [[ -z $selected_project_lang ]]; then
+    exit 0
+fi
+
+echo "new" $selected_project_lang "project"
+
+mkdir -p ~/projects/$name 
+cd ~/projects/$name 
+
+if [[ $selected_project_lang == "cpp" || $selected_project_lang == "c" ]]; then
+	cmake-init
+fi 
+
+if [[ $selected_project_lang == "rust" ]]; then
+	cargo init	
+fi 
+
+if [[ $selected_project_lang == "golang" ]]; then
+    go mod init github.com/$name
+fi 
