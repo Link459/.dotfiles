@@ -16,6 +16,8 @@ require('lazy').setup({
     },
     { 'nvim-lualine/lualine.nvim', dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true } },
 
+
+
     --LSP
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -36,14 +38,14 @@ require('lazy').setup({
             -- Snippets
             {'L3MON4D3/LuaSnip'},
             {'rafamadriz/friendly-snippets'},
-            
+
             {'simrat39/inlay-hints.nvim'},
         }
     },
 
-    { 'windwp/nvim-autopairs',config = function() require('nvim-autopairs').setup{} end},
-    { 'folke/trouble.nvim',dependencies = "kyazdani42/nvim-web-devicons", config = function()require("trouble").setup {} end },
-    { 'folke/todo-comments.nvim',dependencies = "nvim-lua/plenary.nvim",config = function()require("todo-comments").setup {}end},
+    {'windwp/nvim-autopairs' , config = function() require('nvim-autopairs').setup{} end },
+    { 'folke/trouble.nvim' , dependencies = "kyazdani42/nvim-web-devicons" , config = function() require("trouble").setup {} end },
+    { 'folke/todo-comments.nvim', dependencies = "nvim-lua/plenary.nvim" , config = function() require("todo-comments").setup {} end },
 
 
     { 'ThePrimeagen/harpoon' },
