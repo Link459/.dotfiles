@@ -20,6 +20,7 @@ function InsertHeaderGuard(filename,guard_name)
         file:write(header_guard .. content .. "\n#endif /* " .. guardname .. " */\n")
         file:close()
 
+        vim.cmd("e");
     end
 end
 

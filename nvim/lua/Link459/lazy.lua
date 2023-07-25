@@ -14,7 +14,8 @@ require('lazy').setup({
             vim.cmd[[colorscheme tokyonight]]
         end,
     },
-    { 'nvim-lualine/lualine.nvim', dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true } },
+    { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true } },
+    --'kyazdani42/nvim-web-devicons'
 
 
 
@@ -43,11 +44,16 @@ require('lazy').setup({
         }
     },
 
-    {'windwp/nvim-autopairs' , config = function() require('nvim-autopairs').setup{} end },
-    { 'folke/trouble.nvim' , dependencies = "kyazdani42/nvim-web-devicons" , config = function() require("trouble").setup {} end },
+    { 'windwp/nvim-autopairs' , config = function() require('nvim-autopairs').setup{} end },
+    { 'folke/trouble.nvim' , dependencies = "nvim-tree/nvim-web-devicons" , config = function() require("trouble").setup {} end },
     { 'folke/todo-comments.nvim', dependencies = "nvim-lua/plenary.nvim" , config = function() require("todo-comments").setup {} end },
 
+	{ 'goolord/alpha-nvim',  dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
+    {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "VeryLazy",
+    opts = function()
+    return require "Link459.config.null-ls" end, },
     { 'ThePrimeagen/harpoon' },
 })
-

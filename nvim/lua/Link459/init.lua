@@ -1,3 +1,2 @@
 require("Link459.set")
-require("Link459.packer")
-require("mason").setup()
+require("Link459.lazy")
