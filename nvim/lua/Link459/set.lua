@@ -14,6 +14,8 @@ vim.opt.wrap = false
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 
+vim.opt.hlsearch = false
+
 vim.opt.updatetime = 50
 
 vim.g.mapleader = " "

@@ -1,4 +1,5 @@
-require('lualine').setup ({
+
+    return { 'nvim-lualine/lualine.nvim', event = { "VimEnter", "BufReadPost", "BufNewFile" },dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true } ,config = function() require('lualine').setup ({
     options = {
         font_family = 'JetBrains Mono',
         font_size = 12,
@@ -37,13 +38,14 @@ require('lualine').setup ({
     },
     tabline = {},
     winbar = {
-        lualine_a = {'branch'},
-        lualine_b = {},
-        lualine_c = {'diff'},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {'searchcount'}
+        --lualine_a = {'branch'},
+        --lualine_b = {},
+        --lualine_c = {'diff'},
+        --lualine_x = {},
+        --lualine_y = {},
+        --lualine_z = {'searchcount'}
     },
     inactive_winbar = {},
     extensions = {}
-})
+})end ,}
+
