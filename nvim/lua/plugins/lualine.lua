@@ -5,8 +5,8 @@
         font_size = 12,
         icons_enabled = true,
         theme = 'auto',
-        section_separators = {left = '', right = ''},
-        component_separators = {left = '', right = ''},
+        section_separators = {left = '', right = ''},
+        component_separators = {left = '', right = ''},
         disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -23,7 +23,9 @@
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'filename','filesize'},
-        lualine_c = {'diagnostics'},
+        --using troublesum
+        --lualine_c = {'diagnostics'},
+        lualine_c = {},
         lualine_x = {},
         lualine_y = {'progress'},
         lualine_z = {'location'}

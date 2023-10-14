@@ -1,6 +1,7 @@
 require 'plugins.headerguard'
 
-return {
+return 
+{
 require 'plugins.alpha',
 require 'plugins.crates',
 require 'plugins.hardtime',
@@ -14,9 +15,10 @@ require 'plugins.tokyonight',
 require 'plugins.treesitter',
 require 'plugins.trouble',
 require 'plugins.troublesum',
+require 'plugins.duck',
+require 'plugins.undotree',
 defaults = {
         lazy = true
     },
     { 'windwp/nvim-autopairs' , config = function() require('nvim-autopairs').setup{} end },
 }
-

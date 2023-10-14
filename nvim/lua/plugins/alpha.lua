@@ -1,6 +1,3 @@
---local alpha = require('alpha')
---local dashboard = require('alpha.themes.dashboard')
-
 local doom = {
       [[=================     ===============     ===============   ========  ========]],
       [[\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //]],
@@ -60,10 +57,20 @@ local cacoademon = {
 "                                                                    ",
 
 }
---dashboard.section.header.val = cacoademon
 
---dashboard.section.buttons.val = {}
 
---alpha.setup(dashboard.opts)
+return { 'goolord/alpha-nvim',  dependencies = { 'nvim-tree/nvim-web-devicons' } , config = function()
+local alpha = require('alpha')
+local dashboard = require('alpha.themes.dashboard')
 
-    return { 'goolord/alpha-nvim',  dependencies = { 'nvim-tree/nvim-web-devicons' } }
+dashboard.section.header.val = cacoademon
+
+dashboard.section.buttons.val = {
+   dashboard.button("spc s f", "󰈞  Find file"),
+   dashboard.button("spc s s", "󰈬  Find word"),
+   dashboard.button("spc h s","⇁ Harpoon Menu"),
+   dashboard.button("spc t","⍁ Toggle Trouble"),
+}
+
+alpha.setup(dashboard.opts)
+end}

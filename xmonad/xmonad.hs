@@ -68,10 +68,10 @@ myLauncher :: String
 myLauncher = "dmenu_run"
 
 myNormColor :: String       
-myNormColor   = "#98be65" 
+myNormColor   = "#959cbd" 
 
 myFocusColor :: String
-myFocusColor  =  "#46d9ff"
+myFocusColor  =  "#3d59a1"
 
 myBorderWidth :: Dimension
 myBorderWidth = 2
