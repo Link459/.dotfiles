@@ -1,17 +1,10 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ inputs, config, pkgs, ... }:
-
-{
+{ inputs, config, pkgs, ... }: {
   nixpkgs.config.allowUnfree = true;
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -22,7 +15,6 @@
 
   time.timeZone = "Europe/Berlin";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -38,25 +30,19 @@
   };
 
   services.xserver = {
-    layout = "de";
-    xkbVariant = "";
+    layout = "de,us";
+    xkbVariant = ",dvp";
+    xkbOptions = "grp:win_space_toggle";
   };
 
   console.keyMap = "de";
 
-  /* sound.enable = true;
-     hardware.pulseaudio.enable = true;
-     hardware.pulseaudio.support32Bit =
-       true;
-  */
-  # # If compatibility with 32-bit applications is desired.
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
     #jack.enable = true;
   };
   programs.fish.enable = true;
@@ -67,7 +53,6 @@
     shell = pkgs.fish;
     packages = with pkgs; [ ];
   };
-
   nix = {
     settings.auto-optimise-store = true;
     package = pkgs.nixFlakes;
@@ -75,8 +60,6 @@
       experimental-features = nix-command flakes
     '';
   };
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
 
   environment.systemPackages = with pkgs; [
     #editor ,terminal, etc...
@@ -99,15 +82,14 @@
     onefetch
     du-dust
     starship
-    imagemagick
     pipes
     ranger
-    shutter
-    #compiler stuff
+    #direnv
 
-    stack
-    ghc
-    haskellPackages.haskell-language-server
+    gparted
+    # windows fs stuff
+    ntfs3g
+    #compiler stuff
     clang-tools
     cmake-format
     statix
@@ -118,7 +100,6 @@
     clang
     rustup
     #compiler tool stuff
-    linuxKernel.packages.linux_6_1.perf
     gnumake
     cmake
     ninja
@@ -130,8 +111,6 @@
 
     #window stuff
     dmenu
-    conky
-    xmobar
 
     picom
     xorg.libxcb
@@ -139,6 +118,7 @@
     xorg.libX11
     xorg.libXext
     xorg.xinit
+    xdotool
     #audio
     pipewire
   ];
@@ -154,7 +134,6 @@
   services.xserver.displayManager = { sddm = { enable = true; }; };
 
   services.xserver.enable = true;
-  services.xserver.windowManager.dwm.enable = true;
 
   services.xserver.windowManager.xmonad = {
     enable = true;
@@ -164,10 +143,6 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      dwm = prev.dwm.overrideAttrs (oldAttrs: rec {
-        buildInputs = oldAttrs.buildInputs ++ [ pkgs.xorg.libXext ];
-        src = /home/link459/dwm;
-      });
       picom = prev.picom.overrideAttrs (oldAttrs: rec {
         src = pkgs.fetchFromGitHub {
           repo = "picom";
@@ -184,10 +159,8 @@
 
   hardware.opengl.enable = true;
 
-  # Optionally, you may need to select the appropriate driver version for your specific GPU.
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
 
   fonts = {
@@ -204,17 +177,10 @@
     };
   };
 
-  #system.copySystemConfiguration = true;
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
   system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.05";
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.05";
 
 }

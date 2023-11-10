@@ -5,15 +5,6 @@ import qualified XMonad.StackSet as W
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.WithAll
 import XMonad.Actions.MouseResize
-import XMonad.Layout.WindowArranger
-
-    -- Data
-import Data.Char (isSpace, toUpper)
-import Data.Maybe (fromJust)
-import Data.Monoid
-import Data.Maybe (isJust)
-import Data.Tree
-import qualified Data.Map as M
 
     -- Hooks
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
@@ -37,7 +28,6 @@ import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
-import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
@@ -47,13 +37,15 @@ import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(T
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
    -- Utilities
-import XMonad.Util.EZConfig (additionalKeysP, mkNamedKeymap)
 import XMonad.Util.Hacks (windowedFullscreenFixEventHook, javaHack, trayerAboveXmobarEventHook, trayAbovePanelEventHook, trayerPaddingXmobarEventHook, trayPaddingXmobarEventHook, trayPaddingEventHook)
 import XMonad.Util.NamedActions
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Cursor (setDefaultCursor)
+
+import qualified Data.Map as M
+import Data.Monoid
 
 myModMask :: KeyMask
 myModMask = mod1Mask

@@ -1,5 +1,4 @@
-
-    return { 'nvim-lualine/lualine.nvim', event = { "VimEnter", "BufReadPost", "BufNewFile" },dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true } ,config = function() require('lualine').setup ({
+return { 'nvim-lualine/lualine.nvim', event = { 'VimEnter', 'BufReadPost', 'BufNewFile' },dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true } ,config = function() require('lualine').setup ({
     options = {
         font_family = 'JetBrains Mono',
         font_size = 12,

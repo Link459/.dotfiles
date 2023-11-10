@@ -16,13 +16,11 @@ vim.o.hlsearch = false
 
 vim.o.updatetime = 50
 
-vim.o.guicursor = ""
-vim.g.mapleader = " "
+vim.o.guicursor = ''
+vim.g.mapleader = ' '
 
 vim.o.backup = false
-vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.o.undofile = true
 
 vim.loader.enable()
-
-
