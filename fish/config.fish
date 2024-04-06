@@ -16,4 +16,3 @@ bind \cf '~/.dotfiles/scripts/tmux-sessionizer'
 
 colorscript -r
 starship init fish | source
-direnv hook fish | source

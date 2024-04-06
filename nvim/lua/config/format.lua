@@ -3,6 +3,6 @@ function format(args)
 end
 
 vim.api.nvim_create_autocmd({ 'BufWritePost'}, {
-  pattern = { '*.rs','*.h','*.cpp' },
+  pattern = { '*.rs','*.h','*.c','*.cpp' },
   callback = format,
 })

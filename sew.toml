@@ -1,0 +1,5 @@
+src = "/home/link459/.dotfiles"
+dst = "/home/link459/"
+global_remap = ".config/"
+
+ignore = ["nixos","default.nix","install.sh","languages","scripts","automount.sh",".git"]

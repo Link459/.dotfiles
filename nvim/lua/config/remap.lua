@@ -1,4 +1,4 @@
-local builtin = require('telescope.builtin')
+--[[
 local ui = require('harpoon.ui')
 local mark = require('harpoon.mark')
 
@@ -13,7 +13,7 @@ vim.keymap.set('n','<leader>h5',function() ui.nav_file(5) end)
 vim.keymap.set('n','<leader>h6',function() ui.nav_file(6) end)
 vim.keymap.set('n','<leader>h7',function() ui.nav_file(7) end)
 vim.keymap.set('n','<leader>h8',function() ui.nav_file(8) end)
-
+]]--
 vim.keymap.set('n','<leader>sn',function() vim.cmd('ClangdSwitchSourceHeader')end)
 
 vim.keymap.set('i', '<Tab>', '<C-V><Tab>', { noremap = true })

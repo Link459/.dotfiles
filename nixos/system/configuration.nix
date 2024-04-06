@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }: {
+{ inputs, config, pkgs, lib, ... }: {
   nixpkgs.config.allowUnfree = true;
   imports = [
     # Include the results of the hardware scan.
@@ -30,7 +30,7 @@
   };
 
   services.xserver = {
-    layout = "de,us";
+    layout = "us,us";
     xkbVariant = ",dvp";
     xkbOptions = "grp:win_space_toggle";
   };
@@ -49,7 +49,7 @@
   users.users.link459 = {
     isNormalUser = true;
     description = "link459";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "storage" ];
     shell = pkgs.fish;
     packages = with pkgs; [ ];
   };
@@ -60,6 +60,38 @@
       experimental-features = nix-command flakes
     '';
   };
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      # Add additional package names here
+      "spotify"
+    ];
+
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
+
+  hardware.keyboard.qmk.enable = true;
+  # See https://get.vial.today/manual/linux-udev.html
+
+  #services.udev.extraRules = ''
+  #  KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", TAG+="uaccess", TAG+="udev-acl", GROUP="link459"
+  #'';
+
+  #hardware = {
+  #  udev.extraRules = ''
+  #    # Replace with your actual VID and PID
+  #    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2e8a", ATTR{idProduct}=="0003", RUN+="./home/link459/.dotfiles/automount.sh %k"
+  #  '';
+  # };
+
+  # Mount point for Liatris microcontroller
+  # fileSystems."/mnt/liatris" = {
+  #   device =
+  #     "/dev/LiatrisMicrocontroller"; # Replace with your actual device name
+  #   fsType = "auto"; # Replace with your desired filesystem type
+  #   options = [ "defaults" ]; # Add any additional mount options
+  # };
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   environment.systemPackages = with pkgs; [
     #editor ,terminal, etc...
@@ -69,6 +101,8 @@
     git
     firefox
     home-manager
+    obsidian
+    spotify
     #shell stuff
     htop
     ripgrep
@@ -84,7 +118,9 @@
     starship
     pipes
     ranger
+    netcat-gnu
     #direnv
+    qmk
 
     gparted
     # windows fs stuff
@@ -103,11 +139,13 @@
     gnumake
     cmake
     ninja
+    bear
 
     #graphics stuff
     vulkan-tools
     vulkan-validation-layers
     vulkan-headers
+    glfw
 
     #window stuff
     dmenu
@@ -177,10 +215,14 @@
     };
   };
 
+  boot.plymouth = {
+    enable = true;
+    theme = "breeze";
+  };
+
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.05";
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.11";
 
-  system.stateVersion = "23.05";
-
+  system.stateVersion = "23.11";
 }

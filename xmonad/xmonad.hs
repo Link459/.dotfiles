@@ -152,7 +152,7 @@ myKeys conf@(XConfig {XMonad.modMask = mod1Mask}) = M.fromList $
         -- Move workspace or send window to any workspaces
         ((m .|. mod1Mask, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+            , (f, m) <- [(W.greedyView, 0), (W.shift, controlMask)] --shiftMask)]
     ]
 
 main :: IO()
