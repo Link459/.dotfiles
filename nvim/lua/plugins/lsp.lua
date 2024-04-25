@@ -155,7 +155,7 @@ return {
 
         lspconfig.clangd.setup({
             on_attach = function(c,b) ih.on_attach(c,b) end,
-            cmd = { "/run/current-system/sw/bin/clangd",
+            cmd = { "clangd",--"/run/current-system/sw/bin/clangd",
             "--enable-config",
             "--background-index",
             "--header-insertion=never",

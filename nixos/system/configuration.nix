@@ -30,9 +30,11 @@
   };
 
   services.xserver = {
-    layout = "us,us";
-    xkbVariant = ",dvp";
-    xkbOptions = "grp:win_space_toggle";
+    xkb = {
+      layout = "us,us";
+      variant = ",dvp";
+      options = "grp:win_space_toggle";
+    };
   };
 
   console.keyMap = "de";
@@ -53,6 +55,7 @@
     shell = pkgs.fish;
     packages = with pkgs; [ ];
   };
+
   nix = {
     settings.auto-optimise-store = true;
     package = pkgs.nixFlakes;
@@ -96,7 +99,6 @@
   environment.systemPackages = with pkgs; [
     #editor ,terminal, etc...
     neovim
-    kitty
     alacritty
     git
     firefox
@@ -110,32 +112,23 @@
     tmux
     neofetch
     feh
-    fd
     unzip
     dwt1-shell-color-scripts
     onefetch
     du-dust
     starship
-    pipes
-    ranger
-    netcat-gnu
-    #direnv
+    direnv
     qmk
 
-    gparted
-    # windows fs stuff
-    ntfs3g
     #compiler stuff
-    clang-tools
+    #clang-tools
+    clang-tools_18
     cmake-format
-    statix
     rust-analyzer
     nixpkgs-fmt
-    nixfmt
-    # needed for rust analyzer cause linker
+    nixfmt-classic
     clang
     rustup
-    #compiler tool stuff
     gnumake
     cmake
     ninja
@@ -146,30 +139,29 @@
     vulkan-validation-layers
     vulkan-headers
     glfw
-
+    #renderdoc
     #window stuff
     dmenu
 
     picom
-    xorg.libxcb
-    xorg.xcbutil
-    xorg.libX11
-    xorg.libXext
-    xorg.xinit
-    xdotool
+    #xorg.libxcb
+    #xorg.xcbutil
+    #xorg.libX11
+    #xorg.libXext
+    #xorg.xinit
     #audio
     pipewire
   ];
 
   #environment.systemPackages = [inputs.home-manager];
 
-  services.xserver.displayManager.session = [{
-    name = "xtrait";
-    manage = "desktop";
-    start =
-      "/nix/store/jfrcpda53v7dzdvc972vr92dmba2l557-xtrait-0.1.0/bin/xtrait";
-  }];
-  services.xserver.displayManager = { sddm = { enable = true; }; };
+  #services.xserver.displayManager.session = [{
+  #  name = "xtrait";
+  #  manage = "desktop";
+  #  start =
+  #    "/nix/store/jfrcpda53v7dzdvc972vr92dmba2l557-xtrait-0.1.0/bin/xtrait";
+  #}];
+  services.displayManager = { sddm = { enable = true; }; };
 
   services.xserver.enable = true;
 
@@ -179,19 +171,19 @@
     config = builtins.readFile /home/link459/.dotfiles/xmonad/xmonad.hs;
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      picom = prev.picom.overrideAttrs (oldAttrs: rec {
-        src = pkgs.fetchFromGitHub {
-          repo = "picom";
-          owner = "ibhagwan";
-          rev = "44b4970f70d6b23759a61a2b94d9bfb4351b41b1";
-          sha256 = "0iff4bwpc00xbjad0m000midslgx12aihs33mdvfckr75r114ylh";
-        };
-
-      });
-    })
-  ];
+  #nixpkgs.overlays = [
+  #  (final: prev: {
+  #    picom = prev.picom.overrideAttrs (oldAttrs: rec {
+  #      src = pkgs.fetchFromGitHub {
+  #        repo = "picom";
+  #        owner = "ibhagwan";
+  #        rev = "44b4970f70d6b23759a61a2b94d9bfb4351b41b1";
+  #        sha256 = "0iff4bwpc00xbjad0m000midslgx12aihs33mdvfckr75r114ylh";
+  #      };
+  #
+  #      });
+  #    })
+  #  ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -200,10 +192,11 @@
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   hardware.nvidia.modesetting.enable = true;
+  boot.kernel.sysctl."fs.file-max" = 65536;
 
   fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs;
+    enableDefaultPackages = true;
+    packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
     fontconfig = {
@@ -222,7 +215,7 @@
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.11";
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
 
   system.stateVersion = "23.11";
 }
