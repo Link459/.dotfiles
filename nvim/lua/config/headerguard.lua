@@ -1,3 +1,5 @@
+vim.g.header_guard = true
+
 function InsertHeaderGuard(filename,guard_name)
     -- Extract the header guard name from the filename
     local guardname = guard_name:upper():gsub('%W', '_')
@@ -25,15 +27,19 @@ function InsertHeaderGuard(filename,guard_name)
 end
 
 function OnHeaderSave(args)
-    -- Get the full path of the file being saved
+    if vim.g.header_guard then
     local fname = vim.fn.expand('<afile>')
     local guard_name = vim.fn.expand('%:t')
-    -- Insert the header guard
     InsertHeaderGuard(fname,guard_name)
+	end
 end
 
--- Add an autocmd to execute the function when a .h or .hpp file is saved
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { '*.h' ,'*.hpp' },
     callback = OnHeaderSave,
 })
+
+vim.api.nvim_create_user_command('HeaderGuardToggle', function()
+        vim.g.header_guard = not vim.g.header_guard
+        print('header guard enabled: ' .. tostring(vim.g.header_guard))
+    end,{})

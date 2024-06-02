@@ -34,7 +34,7 @@ return {
         local cmp_mappings = {
             ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
             ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-            ['<Tab>'] = cmp.mapping.confirm({ select = true,behavior = cmp.ConfirmBehavior.Replace,}),
+            ['<Tab>'] = cmp.mapping.confirm({ select = true,behavior = cmp.ConfirmBehavior.Insert,}),
             ["<C-Space>"] = cmp.mapping.complete(),
         }
 
@@ -159,6 +159,8 @@ return {
             "--enable-config",
             "--background-index",
             "--header-insertion=never",
+            "--function-arg-placeholders=false",
+            --"--completion-style=detailed",
             "--all-scopes-completion",
             "--clang-tidy"
         },
@@ -166,23 +168,63 @@ return {
     })
 
     lspconfig.rust_analyzer.setup({
-        cmd = { "/nix/store/7ls6k3101cgvrxg1qvh8k0apb4smfyqx-profile/bin/rust-analyzer" },
+        cmd = { "rust-analyzer" }, --"/nix/store/7ls6k3101cgvrxg1qvh8k0apb4smfyqx-profile/bin/rust-analyzer" 
         capabilities = capabilities,
     })
 
-    local opts = {buffer = bufnr, remap = false}
+    function get_glsl_cmd() 
+        local cmd = { "glslls", "--stdin" }
 
-    vim.keymap.set("n", "<leader>j", function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set("n", "<leader>k", function() vim.lsp.buf.hover() end, opts)
-    --vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-    --vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        if vim.g.glsl_target then
+            table.insert(cmd, "--target-env=" .. vim.g.glsl_target)
+        end
+
+        return cmd
+    end
+
+    function glsl_start()
+        local cmd = { "glslls", "--stdin" }
+
+        if vim.g.glsl_target then
+            table.insert(cmd, "--target-env=" .. vim.g.glsl_target)
+        end
+        lspconfig.glslls.setup{
+            cmd = cmd,
+        }
+    end
+
+    glsl_start()
+
+    -- sets the --target-env of glslls so you can choose between vulkan and opengl
+    vim.api.nvim_create_user_command('GlslTarget', function(opts)
+        vim.g.glsl_target = opts.args
+        local clients = vim.lsp.get_active_clients()
+        for _, client in ipairs(clients) do
+            if client.name == "glslls" then
+                client.stop()
+            end
+        end
+        glsl_start()
+    end, {
+    nargs = 1,
+    complete = function(ArgLead, CmdLine, CursorPos)
+        return { 'vulkan', 'vulkan1.0', 'vulkan1.1' , 'vulkan1.2' , 'vulkan1.3', 'opengl', 'opengl4.5' }
+    end,
+})
+
+local opts = {buffer = bufnr, remap = false}
+
+vim.keymap.set("n", "<leader>j", function() vim.lsp.buf.definition() end, opts)
+vim.keymap.set("n", "<leader>k", function() vim.lsp.buf.hover() end, opts)
+--vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+--vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.references() end, opts)
+vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
+vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
 
-    vim.diagnostic.config({
-        virtual_text = true
-    })end,
+vim.diagnostic.config({
+    virtual_text = true
+})end,
 }

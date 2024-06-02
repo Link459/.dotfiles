@@ -120,13 +120,15 @@
     direnv
     qmk
 
-    #compiler stuff
-    #clang-tools
+    #tool stuff
     clang-tools_18
+    glslls
     cmake-format
     rust-analyzer
     nixpkgs-fmt
     nixfmt-classic
+
+    #compiler stuff
     clang
     rustup
     gnumake
@@ -134,21 +136,22 @@
     ninja
     bear
 
+    #video
+    obs-studio
+    ffmpeg
+
     #graphics stuff
     vulkan-tools
     vulkan-validation-layers
     vulkan-headers
     glfw
     #renderdoc
+
     #window stuff
     dmenu
 
     picom
-    #xorg.libxcb
-    #xorg.xcbutil
-    #xorg.libX11
-    #xorg.libXext
-    #xorg.xinit
+
     #audio
     pipewire
   ];
