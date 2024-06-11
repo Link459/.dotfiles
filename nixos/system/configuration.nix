@@ -116,6 +116,9 @@
     dwt1-shell-color-scripts
     onefetch
     du-dust
+    zoxide
+    eza
+    bat
     starship
     direnv
     qmk
@@ -136,6 +139,7 @@
     ninja
     bear
 
+    blender
     #video
     obs-studio
     ffmpeg
@@ -145,7 +149,7 @@
     vulkan-validation-layers
     vulkan-headers
     glfw
-    #renderdoc
+    renderdoc
 
     #window stuff
     dmenu
