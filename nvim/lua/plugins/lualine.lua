@@ -1,4 +1,23 @@
-return { 'nvim-lualine/lualine.nvim', event = { 'VimEnter', 'BufReadPost', 'BufNewFile' },dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true } ,config = function() require('lualine').setup ({
+local mode_map = {
+n = " Normal",
+nt = " Normal",
+i = " Insert",
+R = " Replace",
+v = "Visual",
+V = "Visual",
+no = "Σ(°△°ꪱꪱꪱ)",
+["\22"] = "(⊙ _ ⊙ )",
+t = "(⌐■_■)",
+['!'] = "Σ(°△°ꪱꪱꪱ)",
+c = "Command",
+s = "SUB"
+} 
+
+return { 
+    'nvim-lualine/lualine.nvim',
+    event = { 'VimEnter', 'BufReadPost', 'BufNewFile' },
+    dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
+    config = function() require('lualine').setup ({
     options = {
         font_family = 'JetBrains Mono',
         font_size = 12,
@@ -20,14 +39,19 @@ return { 'nvim-lualine/lualine.nvim', event = { 'VimEnter', 'BufReadPost', 'BufN
         }
     },
     sections = {
-        lualine_a = {'mode'},
+        lualine_a = { {'mode', icons_enabled = true, 
+		fmt = function()
+			return mode_map[vim.api.nvim_get_mode().mode] or vim.api.nvim_get_mode().mode
+		end
+    } },
         lualine_b = {'filename','filesize'},
         --using troublesum
         --lualine_c = {'diagnostics'},
         lualine_c = {},
         lualine_x = {},
         lualine_y = {'progress'},
-        lualine_z = {'location'}
+        lualine_z = {'location'},
+        
     },
     inactive_sections = {
         lualine_a = {},

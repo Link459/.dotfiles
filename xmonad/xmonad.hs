@@ -53,6 +53,9 @@ myModMask = mod1Mask
 myTerminal :: String
 myTerminal = "alacritty"
 
+myScreenshot :: String
+myScreenshot = "flameshot gui"
+
 myBrowser :: String 
 myBrowser = "firefox"
 
@@ -127,6 +130,7 @@ myKeys conf@(XConfig {XMonad.modMask = mod1Mask}) = M.fromList $
         ((mod1Mask, xK_t),    spawn myTerminal),
         ((mod1Mask, xK_p),    spawn myLauncher),
         ((mod1Mask, xK_b),    spawn myBrowser),
+        ((mod1Mask, xK_s),    spawn myScreenshot),
         ((mod1Mask, xK_q),         kill),
         ((mod1Mask .|. shiftMask, xK_a), killAll),
         ((mod1Mask, xK_space),    sendMessage NextLayout),

@@ -1,15 +1,12 @@
 { inputs, config, pkgs, lib, ... }: {
   nixpkgs.config.allowUnfree = true;
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "nixos";
 
   networking.networkmanager.enable = true;
 
@@ -45,9 +42,10 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    #jack.enable = true;
   };
+
   programs.fish.enable = true;
+  programs.nix-ld.enable = true;
   users.users.link459 = {
     isNormalUser = true;
     description = "link459";
@@ -64,34 +62,11 @@
     '';
   };
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      # Add additional package names here
-      "spotify"
-    ];
+    builtins.elem (lib.getName pkg) [ "spotify" ];
 
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
   hardware.keyboard.qmk.enable = true;
-  # See https://get.vial.today/manual/linux-udev.html
-
-  #services.udev.extraRules = ''
-  #  KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", TAG+="uaccess", TAG+="udev-acl", GROUP="link459"
-  #'';
-
-  #hardware = {
-  #  udev.extraRules = ''
-  #    # Replace with your actual VID and PID
-  #    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2e8a", ATTR{idProduct}=="0003", RUN+="./home/link459/.dotfiles/automount.sh %k"
-  #  '';
-  # };
-
-  # Mount point for Liatris microcontroller
-  # fileSystems."/mnt/liatris" = {
-  #   device =
-  #     "/dev/LiatrisMicrocontroller"; # Replace with your actual device name
-  #   fsType = "auto"; # Replace with your desired filesystem type
-  #   options = [ "defaults" ]; # Add any additional mount options
-  # };
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -117,6 +92,7 @@
     onefetch
     du-dust
     zoxide
+    flameshot
     eza
     bat
     starship
@@ -138,8 +114,9 @@
     cmake
     ninja
     bear
+    lld_18
+    mold
 
-    blender
     #video
     obs-studio
     ffmpeg
@@ -149,18 +126,23 @@
     vulkan-validation-layers
     vulkan-headers
     glfw
+    # shader stuff
+    glslang
+    spirv-tools
+    spirv-cross
+
     renderdoc
 
+    blender
+    discord
     #window stuff
     dmenu
-
     picom
+    imagemagick
 
     #audio
     pipewire
   ];
-
-  #environment.systemPackages = [inputs.home-manager];
 
   #services.xserver.displayManager.session = [{
   #  name = "xtrait";
@@ -178,17 +160,16 @@
     config = builtins.readFile /home/link459/.dotfiles/xmonad/xmonad.hs;
   };
 
-  #nixpkgs.overlays = [
-  #  (final: prev: {
-  #    picom = prev.picom.overrideAttrs (oldAttrs: rec {
-  #      src = pkgs.fetchFromGitHub {
-  #        repo = "picom";
-  #        owner = "ibhagwan";
-  #        rev = "44b4970f70d6b23759a61a2b94d9bfb4351b41b1";
-  #        sha256 = "0iff4bwpc00xbjad0m000midslgx12aihs33mdvfckr75r114ylh";
-  #      };
-  #
-  #      });
+  #  nixpkgs.overlays = [
+  #    (final: prev: {
+  #      kdePackages.kdenlive = prev.kdePackages.kdenlive.overrideAttrs
+  #        (oldAttrs: rec {
+  #          nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ])
+  #            ++ [ lib.makeBinaryWrapper ];
+  #          postInstall = (oldAttrs.postInstall or "") + ''
+  #            wrapProgram $out/bin/kdenlive --prefix LADSPA_PATH : ${rnnoise-plugin}/lib/ladspa
+  #          '';
+  #        });
   #    })
   #  ];
 
