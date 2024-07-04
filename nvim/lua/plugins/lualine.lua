@@ -3,14 +3,14 @@ n = " Normal",
 nt = " Normal",
 i = " Insert",
 R = " Replace",
-v = "Visual",
-V = "Visual",
-no = "Σ(°△°ꪱꪱꪱ)",
-["\22"] = "(⊙ _ ⊙ )",
-t = "(⌐■_■)",
-['!'] = "Σ(°△°ꪱꪱꪱ)",
-c = "Command",
-s = "SUB"
+v = " Visual",
+V = " Visual",
+no = " Normal",
+--["\22"] = "(⊙ _ ⊙ )",
+t = " Terminal",
+--['!'] = "Σ(°△°ꪱꪱꪱ)",
+c = " Command",
+--s = "SUB"
 } 
 
 return { 
