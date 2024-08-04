@@ -6,9 +6,7 @@ let
 
   cfg = config.services.xserver.windowManager.xtait;
 
-in
-
-{
+in {
 
   ###### interface
 
@@ -16,10 +14,10 @@ in
     services.xserver.windowManager.xtrait = {
       enable = mkEnableOption (lib.mdDoc "xtrait");
       package = mkOption {
-        type        = types.package;
-        default     = pkgs.xtrait;
+        type = types.package;
+        default = pkgs.xtrait;
         defaultText = literalExpression "pkgs.xtrait";
-        example     = literalExpression ''
+        example = literalExpression ''
           pkgs.dwm.overrideAttrs (oldAttrs: rec {
             patches = [
               (super.fetchpatch {
@@ -36,18 +34,16 @@ in
     };
   };
 
-
   ###### implementation
 
   config = mkIf cfg.enable {
 
-    services.xserver.windowManager.session = singleton
-      { name = "xtrait";
-        start =
-          ''
-            xtrait &
-          '';
-      };
+    services.xserver.windowManager.session = singleton {
+      name = "xtrait";
+      start = ''
+        xtrait &
+      '';
+    };
 
     environment.systemPackages = [ cfg.package ];
 

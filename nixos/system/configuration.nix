@@ -112,6 +112,7 @@
     rustup
     gnumake
     cmake
+    gdb
     ninja
     bear
     lld_18
@@ -123,6 +124,7 @@
 
     #graphics stuff
     vulkan-tools
+    vulkan-loader
     vulkan-validation-layers
     vulkan-headers
     glfw
@@ -139,6 +141,7 @@
     dmenu
     picom
     imagemagick
+    xclip
 
     #audio
     pipewire
