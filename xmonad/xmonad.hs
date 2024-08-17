@@ -54,7 +54,7 @@ myTerminal :: String
 myTerminal = "alacritty"
 
 myScreenshot :: String
-myScreenshot = "flameshot gui"
+myScreenshot = ".dotfiles/scripts/screenshot.sh"
 
 myBrowser :: String 
 myBrowser = "firefox"

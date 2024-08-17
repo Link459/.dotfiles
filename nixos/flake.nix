@@ -12,7 +12,7 @@
     nixosConfigurations = {
       link459 = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
-        modules = [ ./system/configuration.nix ./system/madness.nix ];
+        modules = [ ./system/configuration.nix ];
       };
     };
 

@@ -124,6 +124,7 @@
 
     #graphics stuff
     vulkan-tools
+    vulkan-tools-lunarg
     vulkan-loader
     vulkan-validation-layers
     vulkan-headers

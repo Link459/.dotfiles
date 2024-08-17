@@ -1,8 +1,13 @@
-#! /usr/bin/bash
-timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+#! /usr/bin/env bash
 
-xclip -selection clipboard -t image/png -i /dev/null
+DIR="$HOME/Screenshots"
 
-scrot ~/Pictures/screenshot_$timestamp.png
+NOW="$(date -Ins)"
 
-xclip -selection clipboard -t image/png -i ~/Pictures/screenshot_$timestamp.png
+DATETIME="$(date -d"${NOW}" +%Y%m%d-%H%M%S)"
+FILE="$DIR/$DATETIME.png"
+
+#mkdir -p "$DIR" && ln -nfs "$DIR" "$SCREENSHOT_DIR/latest"
+
+import "$FILE"
+xclip -i "$FILE" -selection clipboard -target image/png
