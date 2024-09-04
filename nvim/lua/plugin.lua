@@ -16,7 +16,6 @@ require 'plugins.trouble',
 require 'plugins.troublesum',
 require 'plugins.undotree',
 require 'plugins.fidget',
-require 'plugins.cord',
 defaults = {
         lazy = true
     },
