@@ -16,7 +16,6 @@ return {
                 	".git",
                     "./ext",
                     "./.cache",
-                    ".cache",
             	}
         	}
         }

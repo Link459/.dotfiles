@@ -14,10 +14,6 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-alias cat='bat --paging=never'
-alias ls='eza'
-
 bind \cf '~/.dotfiles/scripts/tmux-sessionizer'
 
 starship init fish | source
-zoxide init fish --cmd cd | source
