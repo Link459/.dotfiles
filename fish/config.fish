@@ -9,6 +9,7 @@ alias branch='git branch'
 alias checkout='git checkout'
 
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/link459/.nix-profile/lib"
+export EDITOR=nvim
 
 if status is-interactive
     # Commands to run in interactive sessions can go here

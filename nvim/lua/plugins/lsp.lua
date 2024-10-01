@@ -193,7 +193,8 @@ return {
         }
     end
 
-    glsl_start()
+    lspconfig.glsl_analyzer.setup{}
+    --glsl_start()
 
     -- sets the --target-env of glslls so you can choose between vulkan and opengl
     vim.api.nvim_create_user_command('GlslTarget', function(opts)
