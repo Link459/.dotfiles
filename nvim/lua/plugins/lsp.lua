@@ -158,9 +158,10 @@ return {
             cmd = { "clangd",--"/run/current-system/sw/bin/clangd",
             "--enable-config",
             "--background-index",
+            "--background-index-priority=normal",
             "--header-insertion=never",
             "--function-arg-placeholders=false",
-            --"--completion-style=detailed",
+            "--completion-style=bundled",
             "--all-scopes-completion",
             "--clang-tidy"
         },
