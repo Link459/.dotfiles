@@ -7,14 +7,18 @@ return {
             pickers = {
                 find_files = {
                     hidden = true,
-                }
+                },
             },
 
             defaults = {
+                vimgrep_arguments = {
+                    "rg",
+                    "-g '!ext/'"
+                },
         		file_ignore_patterns = {
                		"./.git",
                 	".git",
-                    "./ext",
+                    "./ext/",
                     "./.cache",
             	}
         	}
