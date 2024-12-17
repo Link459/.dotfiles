@@ -11,10 +11,10 @@ return {
             },
 
             defaults = {
-                vimgrep_arguments = {
+                --[[vimgrep_arguments = {
                     "rg",
                     "-g '!ext/'"
-                },
+                },]]
         		file_ignore_patterns = {
                		"./.git",
                 	".git",
