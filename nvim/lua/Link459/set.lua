@@ -23,6 +23,6 @@ vim.o.backup = false
 vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.o.undofile = true
 
-vim.g.netrw_liststyle = 3
+--vim.g.netrw_liststyle = 3
 
 vim.loader.enable()
