@@ -7,6 +7,7 @@ cp -r ~/.dotfiles/xmonad ~/.config
 
 
 cp ~/.dotfiles/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+cp ~/.dotfiles/ghostty/config ~/.config/ghostty/config
 
 cp ~/.dotfiles/conkyrc ~/.conkyrc 
 cp ~/.dotfiles/starship.toml ~/.config
