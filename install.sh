@@ -4,6 +4,7 @@ cp -r ~/.dotfiles/nvim ~/.config
 cp -r ~/.dotfiles/tmux/ ~/.config
 cp -r ~/.dotfiles/polybar ~/.config
 cp -r ~/.dotfiles/xmonad ~/.config
+cp -r ~/.dotfiles/clangd  ~/.config
 
 
 cp ~/.dotfiles/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
