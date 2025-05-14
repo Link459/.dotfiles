@@ -1,0 +1,2 @@
+picom -b --config ~/.dotfiles/picom/picom.conf
+feh --randomize --bg-scale ~/Wallpapers/
