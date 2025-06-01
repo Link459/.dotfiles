@@ -15,3 +15,5 @@ cp ~/.dotfiles/starship.toml ~/.config
 
 cp ~/.dotfiles/fish/config.fish ~/.config/fish 
 cp ~/.dotfiles/fish/fish_variables ~/.config/fish 
+
+cp ~/.dotfiles/fastfetch/config.jsonc ~/.config/fastfetch/

@@ -172,6 +172,18 @@ return {
         cmd = { "rust-analyzer" }, --"/nix/store/7ls6k3101cgvrxg1qvh8k0apb4smfyqx-profile/bin/rust-analyzer" 
         capabilities = capabilities,
     })
+	lspconfig.slangd.setup( {
+        cmd = {"slangd"},
+  		settings = {
+    	slang = {
+      		predefinedMacros = {},
+      		inlayHints = {
+        		deducedTypes = true,
+        		parameterNames = true,
+      		}
+    	}
+  	}
+	})
 
     function get_glsl_cmd() 
         local cmd = { "glslls", "--stdin" }
