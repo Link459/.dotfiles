@@ -12,22 +12,11 @@ return {
 
         -- Snippets
         {'L3MON4D3/LuaSnip'},
-        {'rafamadriz/friendly-snippets'},
-
-        {'simrat39/inlay-hints.nvim'},
 
         {'onsails/lspkind.nvim'},
     },
     config = function() 
-        local ih = require("inlay-hints")
         local lspkind = require('lspkind')
-        local lspconfig = require('lspconfig')
-        ih.setup({
-            only_current_line = true
-        })
-
-
-
 
         local cmp = require('cmp')
         local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -40,12 +29,9 @@ return {
 
         cmp.setup({
             snippet = {
-                -- REQUIRED - you must specify a snippet engine
                 expand = function(args)
                     local ls
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                    -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                    -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp_mappings,
@@ -153,92 +139,61 @@ return {
 
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-        lspconfig.clangd.setup({
-            on_attach = function(c,b) ih.on_attach(c,b) end,
-            cmd = { "clangd",--"/run/current-system/sw/bin/clangd",
-            "--enable-config",
-            "--background-index",
-            "--background-index-priority=normal",
-            "--header-insertion=never",
-            "--function-arg-placeholders=false",
-            "--completion-style=bundled",
-            "--all-scopes-completion",
-            "--clang-tidy"
-        },
-        capabilities = capabilities,
-    })
+        --local lspconfig = require('lspconfig')
 
-    lspconfig.rust_analyzer.setup({
-        cmd = { "rust-analyzer" }, --"/nix/store/7ls6k3101cgvrxg1qvh8k0apb4smfyqx-profile/bin/rust-analyzer" 
-        capabilities = capabilities,
-    })
-	lspconfig.slangd.setup( {
-        cmd = {"slangd"},
-  		settings = {
-    	slang = {
-      		predefinedMacros = {},
-      		inlayHints = {
-        		deducedTypes = true,
-        		parameterNames = true,
-      		}
-    	}
-  	}
-	})
+        --lspconfig.clangd.setup({
 
-    function get_glsl_cmd() 
-        local cmd = { "glslls", "--stdin" }
+            vim.lsp.config('clangd',{
+                cmd = { "clangd",
+                "--enable-config",
+                "--background-index",
+                "--background-index-priority=normal",
+                "--header-insertion=never",
+                "--function-arg-placeholders=false",
+                "--completion-style=bundled",
+                "--all-scopes-completion",
+                "--clang-tidy"
+            },
+            capabilities = capabilities,
+        })
+        vim.lsp.enable('clangd');
 
-        if vim.g.glsl_target then
-            table.insert(cmd, "--target-env=" .. vim.g.glsl_target)
-        end
+        vim.lsp.config('rust_analyzer',{
+            cmd = { "rust-analyzer" },
+            capabilities = capabilities,
+        })
+        vim.lsp.enable('rust-analyzer')
 
-        return cmd
-    end
+        vim.lsp.config('slangd',{
+            cmd = {"slangd"},
+            settings = {
+                slang = {
+                    predefinedMacros = {},
+                    inlayHints = {
+                        deducedTypes = true,
+                        parameterNames = true,
+                    }
+                }
+            }
+        })
+        vim.lsp.enable('slangd')
 
-    function glsl_start()
-        local cmd = { "glslls", "--stdin" }
+        --lspconfig.glsl_analyzer.setup{}
+        vim.lsp.enable('glsl_analyzer')
 
-        if vim.g.glsl_target then
-            table.insert(cmd, "--target-env=" .. vim.g.glsl_target)
-        end
-        lspconfig.glslls.setup{
-            cmd = cmd,
-        }
-    end
+        local opts = {buffer = bufnr, remap = false}
 
-    lspconfig.glsl_analyzer.setup{}
-    --glsl_start()
-
-    -- sets the --target-env of glslls so you can choose between vulkan and opengl
-    vim.api.nvim_create_user_command('GlslTarget', function(opts)
-        vim.g.glsl_target = opts.args
-        local clients = vim.lsp.get_active_clients()
-        for _, client in ipairs(clients) do
-            if client.name == "glslls" then
-                client.stop()
-            end
-        end
-        glsl_start()
-    end, {
-    nargs = 1,
-    complete = function(ArgLead, CmdLine, CursorPos)
-        return { 'vulkan', 'vulkan1.0', 'vulkan1.1' , 'vulkan1.2' , 'vulkan1.3', 'opengl', 'opengl4.5' }
-    end,
-})
-
-local opts = {buffer = bufnr, remap = false}
-
-vim.keymap.set("n", "<leader>j", function() vim.lsp.buf.definition() end, opts)
-vim.keymap.set("n", "<leader>k", function() vim.lsp.buf.hover() end, opts)
---vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
---vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.references() end, opts)
-vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
-vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        vim.keymap.set("n", "<leader>j", function() vim.lsp.buf.definition() end, opts)
+        vim.keymap.set("n", "<leader>k", function() vim.lsp.buf.hover() end, opts)
+        --vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+        --vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+        vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.references() end, opts)
+        vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
+        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
 
-vim.diagnostic.config({
-    virtual_text = true
-})end,
-}
+        vim.diagnostic.config({
+            virtual_text = true
+        })end,
+    }
