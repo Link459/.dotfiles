@@ -14,7 +14,7 @@ vim.keymap.set('n','<leader>h6',function() ui.nav_file(6) end)
 vim.keymap.set('n','<leader>h7',function() ui.nav_file(7) end)
 vim.keymap.set('n','<leader>h8',function() ui.nav_file(8) end)
 ]]--
-vim.keymap.set('n','<leader>sn',function() vim.cmd('ClangdSwitchSourceHeader')end)
+vim.keymap.set('n','<leader>sn',function() vim.cmd('LspClangdSwitchSourceHeader')end)
 
 vim.keymap.set('i', '<Tab>', '<C-V><Tab>', { noremap = true })
 
