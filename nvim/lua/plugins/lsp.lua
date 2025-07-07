@@ -158,11 +158,11 @@ return {
         })
         vim.lsp.enable('clangd');
 
-        vim.lsp.config('rust-analyzer',{
+        vim.lsp.config('rust_analyzer',{
             cmd = { 'rust-analyzer' },
             capabilities = capabilities,
         })
-        vim.lsp.enable('rust-analyzer')
+        vim.lsp.enable('rust_analyzer')
 
         vim.lsp.config('slangd',{
             cmd = {"slangd"},
