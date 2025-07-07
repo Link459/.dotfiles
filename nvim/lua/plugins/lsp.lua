@@ -158,8 +158,8 @@ return {
         })
         vim.lsp.enable('clangd');
 
-        vim.lsp.config('rust_analyzer',{
-            cmd = { "rust-analyzer" },
+        vim.lsp.config('rust-analyzer',{
+            cmd = { 'rust-analyzer' },
             capabilities = capabilities,
         })
         vim.lsp.enable('rust-analyzer')
@@ -179,6 +179,10 @@ return {
         vim.lsp.enable('slangd')
 
         --lspconfig.glsl_analyzer.setup{}
+        vim.lsp.config('glsl_analyzer',{
+            cmd = { 'glsl_analyzer' },
+            capabilities = capabilities,
+        })
         vim.lsp.enable('glsl_analyzer')
 
         local opts = {buffer = bufnr, remap = false}
