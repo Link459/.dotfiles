@@ -14,6 +14,7 @@ export EDITOR=nvim
 fish_add_path ~/.cargo/bin/
 fish_add_path ~/.local/bin/
 fish_add_path ~/.local/share/gem/ruby/3.3.0/bin/
+fish_add_path ~/VulkanSDK/Releases/Latest/x86_64/bin/
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
