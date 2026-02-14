@@ -36,12 +36,21 @@ return {
             },
             mapping = cmp_mappings,
             window = {
-                completion = cmp.config.window.bordered({col_offset = 3, winhighlight = 'Normal:CmpNormal'}),
-                documentation = cmp.config.window.bordered(),
+                --completion = cmp.config.window.bordered(),
+                completion = {
+                    border = "rounded",
+                	winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                },
+                documentation = {
+                    border = "rounded",
+                	winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                },
+                col_offset = -3,
+                side_padding = 0,
             },
             formatting = {
                 -- changing the order of fields so the icon is the first
-                fields = {'menu', 'abbr', 'kind'},
+                fields = {'icon','abbr', 'kind'},
 
                 -- here is where the change happens
                 format = lspkind.cmp_format({
@@ -178,9 +187,9 @@ return {
         })
         vim.lsp.enable('slangd')
 
-        --lspconfig.glsl_analyzer.setup{}
-        vim.lsp.config('glsl_analyzer',{
+        vim.lsp.config('glsl_analyzer', {
             cmd = { 'glsl_analyzer' },
+            --root_markers = { '.git', 'shaders' },
             capabilities = capabilities,
         })
         vim.lsp.enable('glsl_analyzer')
